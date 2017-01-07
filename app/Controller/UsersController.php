@@ -287,12 +287,12 @@ class UsersController extends AppController {
                 $user['is_verified'] = 1;
             }*/
             if ($this->User->save($user)) {
-                $this->Flash->success(__('Email verified success.'));
+                echo 'Email verified success.';
             } else {
-                $this->Flash->error(__('Email can not verified.'));
+                echo 'Email can not verified.';
             }
         } else {
-            $this->Flash->error(__('Email can not verified.'));
+            echo 'Email can not verified.';
         }
     }
 
@@ -368,6 +368,7 @@ class UsersController extends AppController {
                         $response['data'] = $supplierId;
                         $response['message'] = "";
                     } else {
+                        //pr($this->SupplierDetail->validationErrors);
                         $response['status'] = false;
                         $response['message'] = "Can not save details, please try again";
                     }
@@ -376,7 +377,7 @@ class UsersController extends AppController {
                     $emailTemplate = $this->EmailTemplate->find('first', array('conditions' => array(
                             'EmailTemplate.slug' => 'customer-email-verification'
                     )));
-                    if (!empty($emailTemplate)) {
+                    /*if (!empty($emailTemplate)) {
                         App::uses('CakeEmail', 'Network/Email');
                         $Email = new CakeEmail($settings['Setting']['email_config']);
                         $Email->from(array($emailTemplate['EmailTemplate']['from_email'] => $emailTemplate['EmailTemplate']['from_name']));
@@ -390,7 +391,7 @@ class UsersController extends AppController {
                         if ($Email->send($emailTemplate['EmailTemplate']['description'])) {
                             $response['message'] = 'A verification email has been sent to you, please check your email account, please continue to registration';
                         }
-                    }
+                    }*/
                 } else {
                     $response['status'] = false;
                     $response['message'] = "Can not create your account";

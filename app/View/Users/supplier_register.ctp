@@ -176,7 +176,7 @@
                                                         <div class="form-group">
                                                             <label class="col-sm-3 control-label">Country :</label>
                                                             <div class="col-sm-6 col-md-5">
-                                                                <select class="chosen-select" required name="data[SupplierDetail][country_id]">
+                                                                <select class="chosen-select" onchange="getStates(this.value)" required name="data[SupplierDetail][country_id]">
                                                                     <option value="">Select Country</option>
                                                                     <?php foreach ($countries as $country) { ?>
                                                                         <option value="<?php echo $country['Country']['id']; ?>" <?php echo ($country['Country']['id'] == 101) ? "selected" : ""; ?>><?php echo $country['Country']['name']; ?></option>
@@ -185,9 +185,9 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="col-sm-3 control-label">Country :</label>
+                                                            <label class="col-sm-3 control-label">State :</label>
                                                             <div class="col-sm-6 col-md-5">
-                                                                <select class="chosen-select" required name="data[SupplierDetail][state_id]">
+                                                                <select class="chosen-select state_id" required name="data[SupplierDetail][state_id]">
                                                                     <option value="">Select State</option>
                                                                     <?php foreach ($states as $state) { ?>
                                                                         <option value="<?php echo $state['State']['id']; ?>" <?php echo ($state['State']['id'] == 1) ? "selected" : ""; ?>><?php echo $state['State']['name']; ?></option>
@@ -498,7 +498,34 @@
                                                                                 paths[paths.length - 1] = 'index.html';
                                                                                 location.pathname = paths.join('/');
 
-                                                                            });
+                                                                           });
+
+function getStates(id) {
+        var request = $.ajax({
+            url: apiUrl + "/Cities/getStates",
+            method: "POST",
+            data: $.param({id: id}),
+            dataType: "json"
+        });
+
+        request.done(function (data) {
+            if (data.status) {
+                var html = "";
+                $.each(data.data, function (k, v) {
+                    html += '<option value="' + k + '">' + v + '</option>';
+                });
+                $(".state_id").html(html);
+                $(".state_id").trigger("chosen:updated");
+            } else {
+                alert(data.message);
+            }
+        });
+
+        request.fail(function (jqXHR, textStatus) {
+            alert("Request failed: " + textStatus);
+
+        });
+    } 
 </script>
 
 
