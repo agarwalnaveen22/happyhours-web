@@ -1,0 +1,17 @@
+.lower-bar-search-contant-main-block:hover .hover_black {
+  background: rgba(0, 0, 0, 0.5) none repeat scroll 0 0;
+  border-radius: 5px;
+  display: block;
+  height: 100%;
+  left: 0;
+  padding: 46px 0 83px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 0;
+  z-index: 99999;
+}
+
+.hover_black {
+  display: none;
+}

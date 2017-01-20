@@ -1,358 +1,140 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html class="no-js css-menubar" lang="en">
 <head>
-
-    <meta charset="UTF-8">
-    <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
-    <title>Happy Hours login</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-    <!-- Favicons -->
-    <link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/themes/admin/fonts/opensans-font.css">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/images/icons/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/images/icons/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/images/icons/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/images/icons/apple-touch-icon-57-precomposed.png">
-    <link rel="shortcut icon" href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/images/icons/favicon.png">
-
-    <link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/bootstrap/css/bootstrap.css">
-
-    <!-- HELPERS -->
-    <link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/helpers/boilerplate.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/helpers/border-radius.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/helpers/typography.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/helpers/utils.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/helpers/colors.css">
-
-    <!-- ELEMENTS -->
-    <link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/elements/buttons.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/elements/content-box.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/elements/hover.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/elements/privasia1.css"><link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/elements/privasia2.css">
-
-    <!-- SNIPPETS -->
-    <link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/snippets/files-box.css">
-
-    <!-- Admin theme -->
-    <link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/themes/admin/procurehere.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/themes/admin/color-schemes/Procurehere-theme.css">
-
-    <!-- Components theme -->
-    <link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/themes/components/default.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/themes/components/border-radius.css">
-
-    <!-- Admin responsive -->
-    <link rel="stylesheet" type="text/css" href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/helpers/admin-responsive.css">
-
-    <!-- JS Core -->
-
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/js-core/jquery-core.js"></script>
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/js-core/jquery-ui-core.js"></script>
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/js-core/jquery-ui-widget.js"></script>
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/js-core/jquery-ui-mouse.js"></script>
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/js-core/jquery-ui-position.js"></script>
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/js-core/modernizr.js"></script>
-
-
-    <script type="text/javascript">
-        $(window).load(function () {
-            setTimeout(function () {
-                $('#loading').fadeOut(400, "linear");
-            }, 300);
-        });
-    </script>
-
-
-
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <meta name="description" content="bootstrap admin template">
+  <meta name="author" content="">
+  <title>Happy Hours login</title>
+  <link rel="apple-touch-icon" href="<?php echo Configure::read('App.baseUrl'); ?>/assets/images/apple-touch-icon.png">
+  <link rel="shortcut icon" href="<?php echo Configure::read('App.baseUrl'); ?>/assets/images/favicon.ico">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="<?php echo Configure::read('App.baseUrl'); ?>/global/css/bootstrap.min.css">
+  <link rel="stylesheet" href="<?php echo Configure::read('App.baseUrl'); ?>/global/css/bootstrap-extend.min.css">
+  <link rel="stylesheet" href="<?php echo Configure::read('App.baseUrl'); ?>/assets/css/site.min.css">
+  <!-- Plugins -->
+  <link rel="stylesheet" href="<?php echo Configure::read('App.baseUrl'); ?>/global/vendor/animsition/animsition.css">
+  <link rel="stylesheet" href="<?php echo Configure::read('App.baseUrl'); ?>/global/vendor/asscrollable/asScrollable.css">
+  <link rel="stylesheet" href="<?php echo Configure::read('App.baseUrl'); ?>/global/vendor/switchery/switchery.css">
+  <link rel="stylesheet" href="<?php echo Configure::read('App.baseUrl'); ?>/global/vendor/intro-js/introjs.css">
+  <link rel="stylesheet" href="<?php echo Configure::read('App.baseUrl'); ?>/global/vendor/slidepanel/slidePanel.css">
+  <link rel="stylesheet" href="<?php echo Configure::read('App.baseUrl'); ?>/global/vendor/flag-icon-css/flag-icon.css">
+  <link rel="stylesheet" href="<?php echo Configure::read('App.baseUrl'); ?>/assets/examples/css/pages/login-v2.css">
+  <!-- Fonts -->
+  <link rel="stylesheet" href="<?php echo Configure::read('App.baseUrl'); ?>/global/fonts/web-icons/web-icons.min.css">
+  <link rel="stylesheet" href="<?php echo Configure::read('App.baseUrl'); ?>/global/fonts/brand-icons/brand-icons.min.css">
+  <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>
+  <!--[if lt IE 9]>
+    <script src="<?php echo Configure::read('App.baseUrl'); ?>/global/vendor/html5shiv/html5shiv.min.js"></script>
+    <![endif]-->
+  <!--[if lt IE 10]>
+    <script src="<?php echo Configure::read('App.baseUrl'); ?>/global/vendor/media-match/media.match.min.js"></script>
+    <script src="<?php echo Configure::read('App.baseUrl'); ?>/global/vendor/respond/respond.min.js"></script>
+    <![endif]-->
+  <!-- Scripts -->
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/global/vendor/modernizr/modernizr.js"></script>
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/global/vendor/breakpoints/breakpoints.js"></script>
+  <script>
+  Breakpoints();
+  </script>
 </head>
-
-<body>
-    <div id="loading">
-        <div class="spinner">
-            <div class="bounce1"></div>
-            <div class="bounce2"></div>
-            <div class="bounce3"></div>
+<body class="page-login-v2 layout-full page-dark">
+  <!--[if lt IE 8]>
+        <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+  <!-- Page -->
+  <div class="page animsition" data-animsition-in="fade-in" data-animsition-out="fade-out">
+    <div class="page-content">
+      <div class="page-brand-info">
+        <div class="brand">
+          <img class="brand-img" src="<?php echo Configure::read('App.baseUrl'); ?>/assets/images/logo@2x.png" alt="...">
+          <h2 class="brand-text font-size-40">Happy-hour Buddy</h2>
         </div>
-    </div>
-
-    <style type="text/css">
-        html,
-        body {
-            height: 100%;
-        }
-    </style>
-
-    <img src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/image-resources/image-procurehere/Login-bg.jpg" class="login-img wow fadeIn" alt="">
-
-    <div class="center-vertical">
-        <div class="login_content_area">
-            <div class=" row">
-                <div class="col-xs-12">
-                    <div class="login_logo">
-                        <h1><span class="sr-only">Procurehere</span><img style="width:200px" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/image-resources/image-procurehere/logo-2.png" /></h1>
-                    </div>
-                </div>
-
-                <section class="leftloginPart col-xs-12 col-sm-6 col-md-8">
-                    <?php /*<hgroup class="loging_quote">
-                        <h2>Procurement made Simple</h2>
-                        <h4>Most Intuitive e-procurement system.</h4>
-                    </hgroup>
-
-                    <ul class="dot_list_login">
-                        <li>
-                            <div class="dot_list">
-                                <span class="white_round"></span>
-                            </div>
-                            <h4>Efficient </h4>
-                            <span class="subtext">Saves 60% time and 50% cost</span>
-                        </li>
-                        <li>
-                            <div class="dot_list">
-                                <span class="white_round"></span>
-                            </div>
-                            <h4>Transparent </h4>
-                            <span class="subtext">Automated workflow to remove errors and leakage</span>
-                        </li>
-                        <li>
-                            <div class="dot_list">
-                                <span class="white_round"></span>
-                            </div>
-                            <h4>Intuitive </h4>
-                            <span class="subtext">Designed with user at the center for zero learning curve</span>
-                        </li>
-
-                    </ul>*/ ?>
-
-                </section>
-                <div class=" col-xs-12 col-sm-6 col-md-4">
-                    <form action="" id="login-validation" method="post" >
-                        <?php echo $this->Flash->render(); ?>
-                        <div id="login-form" class="content-box">
-                            <div class="content-box-wrapper">
-
-                                <div class="form-group">
-                                    <label class="sr-only" for="exampleInputEmail1">Email address:</label>
-                                    <input type="email" data-validation="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="ENTER EMAIL">
-                                </div>
-                                <div class="form-group">
-                                    <label class="sr-only" for="exampleInputPassword1">Password:</label>
-
-                                    <input type="password" data-validation="required" name="password" class="form-control" id="exampleInputPassword1" placeholder="PASSWORD">
-                                </div>
-                                <div class="form-group forgot_txt_row">
-                                    
-                                        <a href="#" class="switch-button" id="goToForget" title="Recover password">Forgot Password</a>
-                                   
-                                </div>
-
-                                <div class="button-panel">
-                                    <button type="submit" class="btn btn-block btn-blue btn-lg hvr-pop hvr-rectangle-out marg-top-20" id="loginSigninBtn">Sign in</button>
-
-
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </form>
-                    <form action="" id="forget-form" method="" style="display:none;">
-                        <div id="login-forgot" class="content-box">
-                            <div class="content-box-wrapper pad20A">
-
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1" class="sr-only">Email address:</label>
-                                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
-
-                                </div>
-
-                                <div class="button-panel text-center">
-                                    <button type="submit" class="btn btn-block btn-blue btn-lg hvr-pop hvr-rectangle-out" id="rec_passowrd">Recover Password</button>
-                                    <span class="or_text">Or</span>
-                                    <h3 class="sign_text" id="backToLogin"><a href="#">Back to Login</a></h3>
-                                </div>
-
-                            </div>
-
-                        </div>
-
-                    </form>
-                </div>
+        
+      </div>
+      <div class="page-login-main">
+        <div class="brand visible-xs">
+          <img class="brand-img" src="<?php echo Configure::read('App.baseUrl'); ?>/assets/images/logo-blue@2x.png" alt="...">
+          <h3 class="brand-text font-size-40">Happy-hour Buddy</h3>
+        </div>
+        <h3 class="font-size-24">Sign In</h3>
+        
+        <form action="" id="login-validation" method="post" >
+            <?php echo $this->Flash->render(); ?>
+          <div class="form-group">
+            <label class="sr-only" for="inputEmail">Email</label>
+            <input type="email" class="form-control" required="required" id="inputEmail" name="email" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <label class="sr-only" for="inputPassword">Password</label>
+            <input type="password" class="form-control" required="required" id="inputPassword" name="password" placeholder="Password">
+          </div>
+          <!--div class="form-group clearfix">
+            <div class="checkbox-custom checkbox-inline checkbox-primary pull-left">
+              <input type="checkbox" id="remember" name="checkbox">
+              <label for="inputCheckbox">Remember me</label>
             </div>
-        </div>
+            <a class="pull-right" href="forgot-password.html">Forgot password?</a>
+          </div-->
+          <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+        </form>
+        
+        <footer class="page-copyright">
+          <p>WEBSITE BY Happy-hour Buddy</p>
+          <p>© 2017. All RIGHT RESERVED.</p>
+          <!--div class="social">
+            <a class="btn btn-icon btn-round social-twitter" href="javascript:void(0)">
+              <i class="icon bd-twitter" aria-hidden="true"></i>
+            </a>
+            <a class="btn btn-icon btn-round social-facebook" href="javascript:void(0)">
+              <i class="icon bd-facebook" aria-hidden="true"></i>
+            </a>
+            <a class="btn btn-icon btn-round social-google-plus" href="javascript:void(0)">
+              <i class="icon bd-google-plus" aria-hidden="true"></i>
+            </a>
+          </div-->
+        </footer>
+      </div>
     </div>
-
-
-    <!-- WIDGETS -->
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/bootstrap/js/bootstrap.js"></script>
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/js-core/raphael.js"></script>
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/charts/morris/morris.js"></script>
-	
-	<script>
-$(document).ready(function(){
-    $("#goToForget").click(function(){
-        $("#login-validation").hide();
+  </div>
+  <!-- End Page -->
+  <!-- Core  -->
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/global/vendor/jquery/jquery.js"></script>
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/global/vendor/bootstrap/bootstrap.js"></script>
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/global/vendor/animsition/animsition.js"></script>
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/global/vendor/asscroll/jquery-asScroll.js"></script>
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/global/vendor/mousewheel/jquery.mousewheel.js"></script>
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/global/vendor/asscrollable/jquery.asScrollable.all.js"></script>
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/global/vendor/ashoverscroll/jquery-asHoverScroll.js"></script>
+  <!-- Plugins -->
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/global/vendor/switchery/switchery.min.js"></script>
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/global/vendor/intro-js/intro.js"></script>
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/global/vendor/screenfull/screenfull.js"></script>
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/global/vendor/slidepanel/jquery-slidePanel.js"></script>
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/global/vendor/jquery-placeholder/jquery.placeholder.js"></script>
+  <!-- Scripts -->
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/global/js/core.js"></script>
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/assets/js/site.js"></script>
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/assets/js/sections/menu.js"></script>
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/assets/js/sections/menubar.js"></script>
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/assets/js/sections/gridmenu.js"></script>
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/assets/js/sections/sidebar.js"></script>
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/global/js/configs/config-colors.js"></script>
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/assets/js/configs/config-tour.js"></script>
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/global/js/components/asscrollable.js"></script>
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/global/js/components/animsition.js"></script>
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/global/js/components/slidepanel.js"></script>
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/global/js/components/switchery.js"></script>
+  <script src="<?php echo Configure::read('App.baseUrl'); ?>/global/js/components/jquery-placeholder.js"></script>
+  <script>
+  (function(document, window, $) {
+    'use strict';
+    var Site = window.Site;
+    $(document).ready(function() {
+      Site.run();
     });
-    $("#goToForget").click(function(){
-        $("#forget-form").show();
-    });
-	
-	  $("#backToLogin").click(function(){
-        $("#forget-form").hide();
-    });
-    $("#backToLogin").click(function(){
-        $("#login-validation").show();
-    });
-	
-});
-</script>
-
-backToLogin
-
-    <!-- Morris charts demo -->
-    <!--<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/charts/morris/morris-demo.js"></script>-->
-
-    <script>
-        $('document').ready(function () {
-
-            Morris.Bar({
-                element: 'morris-bar-yearly',
-                data: [
-                    {
-                        y: '2005',
-                        a: 45
-                    },
-                    {
-                        y: '2006',
-                        a: 75
-                    },
-                    {
-                        y: '2007',
-                        a: 100
-                    },
-                    {
-                        y: '2008',
-                        a: 75
-                    },
-                    {
-                        y: '2009',
-                        a: 100
-                    },
-                    {
-                        y: '2010',
-                        a: 75
-                    },
-                    {
-                        y: '2011',
-                        a: 50
-                    },
-                    {
-                        y: '2012',
-                        a: 75
-                    },
-                    {
-                        y: '2013',
-                        a: 50
-                    },
-                    {
-                        y: '2014',
-                        a: 75
-                    },
-                    {
-                        y: '2015',
-                        a: 100
-                    }
-                ],
-                xkey: 'y',
-                ykeys: ['a'],
-                labels: ['Series A'],
-                stacked: true,
-                hideHover: 'auto',
-                resize: true, //defaulted to true
-                gridLineColor: '#eeeeee',
-                barColors: ['#06ccb3']
-            });
-
-            $('#datatable-example').dataTable();
-            $('.dataTables_filter input[type="search"]').attr('placeholder', 'Search Company').css({
-                'width': '250px',
-                'display': 'inline-block'
-            });
-
-        });
-    </script>
-
-
-    <script>
-        $(function () {
-            var availableTags = [
-      "ActionScript",
-      "AppleScript",
-      "Asp",
-      "BASIC",
-      "C",
-      "C++",
-      "Clojure",
-      "COBOL",
-      "ColdFusion",
-      "Erlang",
-      "Fortran",
-      "Groovy",
-      "Haskell",
-      "Java",
-      "JavaScript",
-      "Lisp",
-      "Perl",
-      "PHP",
-      "Python",
-      "Ruby",
-      "Scala",
-      "Scheme"
-    ];
-            $("#tags").autocomplete({
-                source: availableTags
-            });
-            $("#tagres").autocomplete({
-                source: availableTags
-            });
-        });
-    </script>
-
+  })(document, window, jQuery);
+  </script>
 </body>
-
 </html>
-
-<script>
-    $('document').ready(function () {
-
-        $('#goToForget').click(function (event) {
-            event.preventDefault();
-            jQuery('#login-form').hide();
-            jQuery('#login-forgot').show();
-        });
-
-        $('#backToLogin').click(function (event) {
-            event.preventDefault();
-            jQuery('#login-forgot').hide();
-            jQuery('#login-form').show();
-        });
-
-    });
-</script>
-
-<script src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/js-core/validation.js"></script>
-<script>
-    $.validate({
-        lang: 'en',
-        modules: 'date',
-        inlineErrorMessageCallback:  function($input, errorMessage, config) {
-            $input.next('.custom_add').remove();
-            if(errorMessage){
-                var htm = "<span class='help-block form-error custom_add'>" + errorMessage + "</span>";
-                $($input).after(htm);
-            }
-        }
-    });
-</script>

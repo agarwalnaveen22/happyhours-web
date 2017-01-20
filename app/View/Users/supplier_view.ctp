@@ -1,46 +1,63 @@
-<div id="page-content-wrapper">
-    <div id="page-content">
-        <div class="container">
-            <ol class="breadcrumb">
-                <li> <a href="<?php echo Configure::read('App.baseUrl'); ?>users/dashboard">Dashboard</a> </li>
-                <li class="active"> Supplier Details</li>
-            </ol>
+<div class="page animsition">
+    <div class="page-content container-fluid">
+        <div class="row">
+            <!-- pageging  block -->
+
+            <div class="col-md-12">
+
+                <div class="panel" id="exampleWizardFormContainer">
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title">  Supplier Registration Information</h3></div>
+
             <!-- page title block -->
 
-            <div class="Section-title title_border gray-bg">
-                <h2 class="trans-cap progress-head">Supplier Details</h2>
-            </div>
-
-            <!-- page title block -->
 
 
-
-
-            <div class="white-bg border-all-side float-left pad_all_15">
+<div class="panel bgnone">
+                    <div class="panel-body">
+            <div class="cont-box">
                 <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-6 col-sm-6 col-lg-4 col-xs-12">
                         <div class="tag-line">
-                            <h2><?php echo $supplierData['SupplierDetail']['company_name']; ?></h2>
-                            <p>Registration Number: <?php echo $supplierData['SupplierDetail']['company_registration_number']; ?></p>
-                            <p>Bar Licence Number: <?php echo $supplierData['SupplierDetail']['company_bar_licence_number']; ?></p>
-                            <p>Email : <?php echo $supplierData['SupplierDetail']['company_email']; ?></p>
-                        </div>
-                        <div class="print-down">
+                            <div class="lower-bar-search-contant-main-block-heading light-gray-bg pad_all_10">
+                                <h4 class=""><?php echo $supplierData['SupplierDetail']['company_name']; ?></h4>
+                             <div class="print-down">
                             <?php /*<button class="print"><img src="<?php echo Configure::read('App.baseUrl'); ?>/images/print.png" /></button>
                             <button class="download"> <img src="<?php echo Configure::read('App.baseUrl'); ?>/images/download.png" /></button>*/ ?>
                             <a href="<?php echo Configure::read('App.baseUrl')."/users/supplierEdit/".AppController::encryption($supplierData['SupplierDetail']['id']); ?>" class="firstbtn"><img src="<?php echo Configure::read('App.baseUrl'); ?>/images/edit.png"/></a>
                         </div>
+                            
+                            </div>
+                            
+                            <div class="lower-bar-search-contant-main-contant pad-top-side-5">
+                                <label>Registration Number : </label>
+                                <span><?php echo $supplierData['SupplierDetail']['company_registration_number']; ?></span>
+                            </div>
+                            
+                            <div class="lower-bar-search-contant-main-contant pad-top-side-5">
+                                <label>Bar Licence Number : </label> 
+                                <span><?php echo $supplierData['SupplierDetail']['company_bar_licence_number']; ?></span>
+                            
+                            </div>
+                            
+                            <div class="lower-bar-search-contant-main-contant pad-top-side-5">
+                                <label>Email : <label>
+                                    <span><?php echo $supplierData['SupplierDetail']['company_email']; ?></span>
+                                    </div>
+                            
+                            
+                        </div>
+                       
                     </div>
                 </div>
-            </div>
-            <div class="col-md-12 pad0 float-left ">
-                <div class="panel bgnone">
-                    <div class="panel-body">
-                        <div class="example-box-wrapper">
-                            <div class="panel-group" id="accordion">
-                                <div class="panel sum-accord">
+         
+                
+                        <div class="example-box-wrapper marg-top-20">
+                            <div class="panel-group">
+                                <div class="panel border-full pull-left width-100-per">
                                     <div class="panel-heading">
-                                        <h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"> Company Detail </a>
+                                        <h4 class="panel-title1">  Company Detail 
                                             <!--button class="firstbtn"><img src="<?php echo Configure::read('App.baseUrl'); ?>/images/edit.png"/></button-->
                                         </h4>
                                     </div>
@@ -78,13 +95,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="panel sum-accord">
+                                <div class="panel border-full pull-left width-100-per marg-top-20">
                                     <div class="panel-heading">
-                                        <h4 class="panel-title"> <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"> Documents </a> <!--button class="firstbtn"><img src="<?php echo Configure::read('App.baseUrl'); ?>/images/edit.png"/></button--> </h4>
+                                        <h4 class="panel-title1">  Documents  <!--button class="firstbtn"><img src="<?php echo Configure::read('App.baseUrl'); ?>/images/edit.png"/></button--> </h4>
                                     </div>
                                     <div id="collapseTwo" class="panel-collapse collapse" style="display:block">
                                         <form id="documentForms" onsubmit="return verifyDocuments()">
-                                            <div class="panel-body pad_all_15  border-bottom">
+                                            <div class="panel-body pad_all_15 b-r-0">
                                                 <?php foreach ($supplierData['SupplierDocument'] as $documents) { ?>
                                                     <?php //$documents['FileType'] = $this->App->getFileType($documents['file_type_id']); ?>
                                                     <div class="main-panal-box-main comm-info">
@@ -110,12 +127,16 @@
 
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+                  
+          
         </div>
     </div>
+    </div>
 </div>
+    </div>
+</div>
+                
+            </div></div>
 <!-- Bootstrap Tooltip -->
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
 <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/tooltip/tooltip.js"></script>

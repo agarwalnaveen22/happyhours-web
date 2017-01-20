@@ -1,319 +1,141 @@
-<div id="page-content-wrapper">
-    <div id="page-content">
-        <div class="container">
-            <!-- pageging  block -->
+<div class="page animsition">
 
-            <ol class="breadcrumb">
-                <li><a href="<?php echo Configure::read('App.baseUrl'); ?>/users/dashboard">Dashboard</a></li>
-                <li class="active">Township</li>
-            </ol>
-            <section class="create_list_sectoin">
-                <?php
-                $isPermit = $this->App->getPermission($this->Session->read("Auth.User")['User']['role_id'], 'Townships', 'index_1');
-                if ($isPermit) {
-                    ?>
-                    <div class="Section-title title_border gray-bg mar-b20">
-                        <h2 class="trans-cap supplier">Add</h2>
+    <div class="page-content container-fluid">
+        <div class="row">
 
+            <div class="col-md-12">
+                <!-- Panel Wizard Form Container -->
+                <div class="panel" id="exampleWizardFormContainer">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Township</h3>
                     </div>
-                <?php } ?>
-
-
-
-
-
-                <div class="tab-pane active">
-
-
-
-                    <div class="tab-content">
-                        <!-- <div class="heading-tab-pr">PR Detail</div>-->
-
-                        <div class="tab-pane active marg-bottom-15" id="step-1">
-                            <?php if ($isPermit) { ?>
-                                <form method="post" id="supplier-product-category" onsubmit="return saveTownship()">
-                                    <div class="upload_download_wrapper clearfix mar-t20 event_info">
-                                        <h4>Township Details</h4>
-                                        <div class="row">
-                                            <div class="form-tander1 pad_all_15">
-                                                <div class="col-sm-4 col-md-3 col-xs-6">
-                                                    <label>Country</label>
-                                                </div>
-                                                <div class="col-sm-5 col-md-5 col-xs-6 col-xs-6">
-                                                    <select name="data[Township][country_id]" onchange="getStates(this.value)"  required class="custom-select country_id">
-                                                        <option value="">Select Country</option>
-                                                        <?php foreach ($countries as $key => $product) { ?>
-                                                            <option value="<?php echo $key; ?>"><?php echo $product ?></option>
-                                                        <?php } ?>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-tander1 pad_all_15">
-                                                <div class="col-sm-4 col-md-3 col-xs-6">
-                                                    <label>State</label>
-                                                </div>
-                                                <div class="col-sm-5 col-md-5 col-xs-6 col-xs-6">
-                                                    <select name="data[Township][state_id]" onchange="getTownships(this.value)"  required class="custom-select state_id">
-                                                        <option value="">Select State</option>
-
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-tander1 pad_all_15">
-                                                <div class="col-sm-4 col-md-3 col-xs-6">
-                                                    <label>City</label>
-                                                </div>
-                                                <div class="col-sm-5 col-md-5 col-xs-6 col-xs-6">
-                                                    <select name="data[Township][city_id]"  required class="custom-select city_id">
-                                                        <option value="">Select City</option>
-
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-tander1 pad_all_15">
-                                                <div class="col-sm-4 col-md-3 col-xs-6">
-                                                    <label style="line-height:20px;">Name (you can add multiple cities with comma seprated ex. jaipur,alwar)</label>
-                                                </div>
-                                                <div class="col-sm-5 col-md-5 col-xs-6 col-xs-6">
-                                                    <textarea id="name" name="data[Township][name]" required class="form-control"></textarea>
-                                                </div>
-                                            </div>
-
-
-
-                                        </div>
-
-                                    </div>
-
-
-
-                                    <div class="btn-next">
-                                        <input type="hidden" name="data[Township][id]" id="campaignId" value="" />
-                                        <button class="btn btn-info ph_btn marg-top-20 hvr-pop hvr-rectangle-out">Save</button>
-                                    </div>
-
-                                </form>
-                            <?php } ?>
-                            <?php
-                            $isPermit = $this->App->getPermission($this->Session->read("Auth.User")['User']['role_id'], 'Townships', 'index');
-                            if ($isPermit) {
-                                ?>
-                                <table id="campaignList" class="table table-striped table-bordered border-right-left" cellspacing="0" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Country</th>
-                                            <th>State</th>
-                                            <th>City</th>
-                                            <th>Name</th>
-                                            <th>Action</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        <?php foreach ($products as $product) { ?>
-                                            <tr>
-                                                <td><?php echo $product['City']['State']['Country']['name']; ?></td>
-                                                <td><?php echo $product['City']['State']['name']; ?></td>
-                                                <td><?php echo $product['City']['name']; ?></td>
-                                                <td><?php echo $product['Township']['name']; ?></td>
-                                                <td>
-                                                    <?php
-                                                    $isPermit = $this->App->getPermission($this->Session->read("Auth.User")['User']['role_id'], 'Townships', 'index_2');
-                                                    if ($isPermit) {
-                                                        ?>
-                                                        <a href="javascript:" onclick="editTownship('<?php echo AppController::encryption($product['Township']['id']); ?>')"><img src="<?php echo Configure::read('App.baseUrl'); ?>/images/edit1.png" /></a>&nbsp;&nbsp;
-                                                    <?php } ?>
-                                                    <?php
-                                                    $isPermit = $this->App->getPermission($this->Session->read("Auth.User")['User']['role_id'], 'Townships', 'townshipDelete');
-                                                    if ($isPermit) {
-                                                        ?>
-                                                        <a href="javascript:" onclick="deleteTownship('<?php echo AppController::encryption($product['Township']['id']); ?>')"><img src="<?php echo Configure::read('App.baseUrl'); ?>/images/delete1.png" /></a>
-                                                    <?php } ?>
-                                                </td>
-                                            </tr>
+                    <div class="panel-body">
+                        <?php
+                        $isPermit = $this->App->getPermission($this->Session->read("Auth.User")['User']['role_id'], 'Townships', 'index_1');
+                        if ($isPermit) {
+                            ?>
+                            <h3 class="panel-title">Add</h3>
+                            <!-- Wizard Content -->
+                            <form class="wizard-content" method="post" id="supplier-product-category" onsubmit="return saveTownship()">
+                                <div class="form-group">
+                                    <label class="control-label" for="inputPasswordOne">Country :</label>
+                                    <select name="data[Township][country_id]" onchange="getStates(this.value)"  required class="form-control country_id">
+                                        <option value="">Select Country</option>
+                                        <?php foreach ($countries as $key => $product) { ?>
+                                            <option value="<?php echo $key; ?>"><?php echo $product ?></option>
                                         <?php } ?>
-                                    </tbody>
-                                </table>
-                            <?php } ?>
-                        </div>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label" for="inputPasswordOne">State :</label>
+                                    <select name="data[Township][state_id]" onchange="getTownships(this.value)"  required class="form-control state_id">
+                                        <option value="">Select State</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label" for="inputPasswordOne">City :</label>
+                                    <select name="data[Township][city_id]"  required class="form-control city_id">
+                                        <option value="">Select City</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="control-label" for="inputPasswordOne">Name (you can add multiple townships with comma seprated ex. jhotwara,rajapark) :</label>
+                                    <textarea id="name" name="data[Township][name]" required class="form-control"></textarea>
+                                </div>
+
+                                <div class="text-right">
+                                    <input type="hidden" name="data[Township][id]" id="campaignId" value="" />
+                                    <button type="submit" class="btn btn-primary" id="validateButton2">Save</button>
+                                </div>
+
+                            </form>
 
 
-
-
+                        <?php } ?>
 
                     </div>
+                    <?php
+                    $isPermit = $this->App->getPermission($this->Session->read("Auth.User")['User']['role_id'], 'Townships', 'index');
+                    if ($isPermit) {
+                        ?>
+                        <div class="panel-body">
+                            <table id="campaignList" class="table table-striped table-bordered border-right-left" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>Country</th>
+                                        <th>State</th>
+                                        <th>City</th>
+                                        <th>Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
 
+                                <tbody>
+                                    <?php foreach ($products as $product) { ?>
+                                        <tr>
+                                            <td><?php echo $product['City']['State']['Country']['name']; ?></td>
+                                            <td><?php echo $product['City']['State']['name']; ?></td>
+                                            <td><?php echo $product['City']['name']; ?></td>
+                                            <td><?php echo $product['Township']['name']; ?></td>
+                                            <td>
+                                                <?php
+                                                $isPermit = $this->App->getPermission($this->Session->read("Auth.User")['User']['role_id'], 'Townships', 'index_2');
+                                                if ($isPermit) {
+                                                    ?>
+                                                    <a href="javascript:" onclick="editTownship('<?php echo AppController::encryption($product['Township']['id']); ?>')"><img src="<?php echo Configure::read('App.baseUrl'); ?>/images/edit1.png" /></a>&nbsp;&nbsp;
+                                                <?php } ?>
+                                                <?php
+                                                $isPermit = $this->App->getPermission($this->Session->read("Auth.User")['User']['role_id'], 'Townships', 'townshipDelete');
+                                                if ($isPermit) {
+                                                    ?>
+                                                    <a href="javascript:" onclick="deleteTownship('<?php echo AppController::encryption($product['Township']['id']); ?>')"><img src="<?php echo Configure::read('App.baseUrl'); ?>/images/delete1.png" /></a>
+                                                <?php } ?>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    <?php } ?>
 
-
+                    <!-- Wizard Content -->
 
                 </div>
+                <!-- End Panel Wizard Form Container -->
+            </div>
+        </div>
 
 
-            </section>
-
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="examplePositionTop" aria-hidden="true" aria-labelledby="examplePositionTop"
+     role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-top">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title" id="exampleModalTitle">Delete</h4>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" id="confirmDelete" >Yes</button>
+            </div>
         </div>
     </div>
 </div>
 
 
 
-</div>
-
-
-
-
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAwyhHiHzIiINDQVi3o_79P34dTjA5NG0&libraries=places&callback=initAutocomplete" async defer></script>
-<!-- Bootstrap Datepicker -->
 <script>
-                                                            function initAutocomplete() {
-                                                                // Create the autocomplete object, restricting the search to geographical
-                                                                // location types.
-                                                                autocomplete = new google.maps.places.Autocomplete(
-                                                                        /** @type {!HTMLInputElement} */(document.getElementById('landmark')),
-                                                                        {types: ['geocode']});
-
-                                                                autocomplete.addListener('place_changed', fillInAddress);
-                                                            }
-
-                                                            function fillInAddress() {
-                                                                // Get the place details from the autocomplete object.
-                                                                var place = autocomplete.getPlace();
-
-                                                                console.log(place);
-                                                                console.log(JSON.stringify(place));
-                                                                console.log("lat: " + place.geometry.location.lat() + " lng: " + place.geometry.location.lng())
-                                                                $("#lat").val(place.geometry.location.lat());
-                                                                $("#lng").val(place.geometry.location.lng());
-                                                            }
-
-                                                            function geolocate() {
-                                                                if (navigator.geolocation) {
-                                                                    navigator.geolocation.getCurrentPosition(function (position) {
-                                                                        var geolocation = {
-                                                                            lat: position.coords.latitude,
-                                                                            lng: position.coords.longitude
-                                                                        };
-                                                                        var circle = new google.maps.Circle({
-                                                                            center: geolocation,
-                                                                            radius: position.coords.accuracy
-                                                                        });
-                                                                        autocomplete.setBounds(circle.getBounds());
-                                                                    });
-                                                                }
-                                                            }
-</script>
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/datatable/datatable.js"></script>
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/datatable/datatable-bootstrap.js"></script>
-
-
-<!-- Google CDN jQuery with fallback to local -->
-
-<!-- Bootstrap Tooltip -->
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/tooltip/tooltip.js"></script>
-
-
-<!-- WIDGETS -->
-<!-- Uniform -->
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/uniform/uniform.js"></script>
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/uniform/uniform-demo.js"></script>
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/bootstrap/js/bootstrap.js"></script>
-
-<!-- Superclick -->
-
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/superclick/superclick.js"></script>
-
-<!-- Chosen -->
-
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/chosen/chosen.js"></script>
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/chosen/chosen-demo.js"></script>
-
-
-
-<!-- Perfact scroll -->
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/perfect-scrollbar/js/perfect-scrollbar.min.js"></script>
-
-<!-- Content box -->
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/content-box/contentbox.js"></script>
-
-
-<!-- Morris charts demo -->
-<!--<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/charts/morris/morris-demo.js"></script>-->
-
-<!-- EQul height js-->
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/match-height/jquery.matchHeight.js"></script>
-<!-- Theme layout -->
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/themes/admin/layout.js"></script>
-
-<!-- PieGage -->
-
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/charts/piegage/piegage.js"></script>
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/charts/piegage/piegage-demo.js"></script>
-
-<!-- Morris charts -->
-
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/js-core/raphael.js"></script>
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/charts/morris/morris.js"></script>
-
-
-<script>
-                                                            $(document).ready(function () {
-
-
-                                                                $('.column_button_bar').on('click', '#s1_tender_adddel_btn', function (event) {
-                                                                    event.preventDefault();
-                                                                    $('#add_delete_column').show();
-                                                                });
-
-                                                                $('.column_button_bar').on('click', '#s1_tender_additem_btn', function (event) {
-                                                                    event.preventDefault();
-                                                                    $('#creat_seaction_form').show();
-                                                                });
-
-                                                                $('.create_list_sectoin').on('click', '.bq_tender_addsub_item', function (event) {
-                                                                    event.preventDefault();
-                                                                    $('#creat_subitem_form').show();
-                                                                });
-
-
-                                                            });
-</script>
-<script>
-    $(document).ready(function () {
-        $('#campaignList').DataTable();
-        $("#campaignList_wrapper").attr("style", "margin-top:50px");
-        $('.mega').on('scroll', function () {
-            $('.header').css('top', $(this).scrollTop());
-        });
-
-        var availableTags = ["ActionScript", "AppleScript", "Asp", "BASIC", "C", "C++", "Clojure", "COBOL", "ColdFusion", "Erlang", "Fortran", "Groovy", "Haskell", "Java", "JavaScript", "Lisp", "Perl", "PHP", "Python", "Ruby", "Scala", "Scheme"];
-        $("#tags").autocomplete({
-            source: availableTags
-        });
-        $("#tagres").autocomplete({
-            source: availableTags
-        });
-
-
-        $.validate({
-            lang: 'en'
-        });
-
-
-
-        $(".correction-ancher").click(function () {
-            $(this).parent().parent().next(".correction-textarea").show('fast');
-        });
-
-        $(".correction-ancher").click(function () {
-            $(this).parent().parent().hide('fast');
-        });
-
-
-
-    });
-
     function saveTownship() {
         var request = $.ajax({
             url: apiUrl + "/Townships/index",
@@ -411,27 +233,8 @@
     }
 
     function deleteTownship(id) {
-        if (showConfirm("Are you sure?")) {
-            var request = $.ajax({
-                url: apiUrl + "/Townships/townshipDelete/" + id,
-                method: "GET",
-                dataType: "json"
-            });
-
-            request.done(function (data) {
-                if (data.status) {
-                    window.location.reload();
-                } else {
-                    alert(data.message);
-                }
-            });
-
-            request.fail(function (jqXHR, textStatus) {
-                alert("Request failed: " + textStatus);
-
-            });
-        }
-
+        $("#confirmDelete").attr("onclick", "confirmDelete('" + id + "')");
+        $("#examplePositionTop").modal('show');
     }
 
     function getStates(id) {
@@ -485,19 +288,25 @@
 
         });
     }
+
+    function confirmDelete(id) {
+        var request = $.ajax({
+            url: apiUrl + "/Townships/townshipDelete/" + id,
+            method: "GET",
+            dataType: "json"
+        });
+
+        request.done(function (data) {
+            if (data.status) {
+                window.location.reload();
+            } else {
+                alert(data.message);
+            }
+        });
+
+        request.fail(function (jqXHR, textStatus) {
+            alert("Request failed: " + textStatus);
+
+        });
+    }
 </script>
-
-
-
-
-
-
-<style>
-
-</style>
-
-
-
-</body>
-
-</html>

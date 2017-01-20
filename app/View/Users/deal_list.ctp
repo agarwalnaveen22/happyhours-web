@@ -1,32 +1,18 @@
 <div id="page-content-wrapper">
-    <div id="page-content">
-        <div class="container">
-            <!-- pageging  block -->
+    <div class="page animsition">
 
-            <ol class="breadcrumb">
-                <li><a href="<?php echo Configure::read('App.baseUrl'); ?>/users/dashboard">Dashboard</a></li>
-                <li class="active">Deals</li>
-            </ol>
-            <section class="create_list_sectoin">
+    <div class="page-content container-fluid">
+        <div class="row">
 
-                <div class="Section-title title_border gray-bg mar-b20">
-                    <h2 class="trans-cap supplier">Deals</h2>
-
-                </div>
-
-
-
-
-
-
-                <div class="tab-pane active">
-
-
-
-                    <div class="tab-content">
+            <div class="col-md-12">
+                <!-- Panel Wizard Form Container -->
+                <div class="panel" id="exampleWizardFormContainer">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Deals</h3>
+                    </div>
                         <!-- <div class="heading-tab-pr">PR Detail</div>-->
 
-                        <div class="tab-pane active marg-bottom-15" id="step-1">
+                        <div class="panel-body">
                             
 
                             <table id="campaignList" class="table table-striped table-bordered border-right-left" cellspacing="0" width="100%">
@@ -91,7 +77,6 @@
                 </div>
 
 
-            </section>
 
         </div>
     </div>
@@ -104,131 +89,8 @@
 
 
 
-
-<!-- Bootstrap Datepicker -->
-<link href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/datepicker/bootstrap-datetimepicker.css" />
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/datepicker/bootstrap-datetimepicker.js"></script>
-
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/datatable/datatable.js"></script>
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/datatable/datatable-bootstrap.js"></script>
-
-<script type="text/javascript">
-                                                        /* Datepicker bootstrap */
-
-                                                        $(function () {
-                                                            "use strict";
-                                                            $('.bootstrap-datepicker').datetimepicker({
-                                                                language: 'pt-BR'
-                                                            });
-                                                        });
-</script>
-<!-- Google CDN jQuery with fallback to local -->
-
-<!-- Bootstrap Tooltip -->
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/tooltip/tooltip.js"></script>
-
-
-<!-- WIDGETS -->
-<!-- Uniform -->
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/uniform/uniform.js"></script>
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/uniform/uniform-demo.js"></script>
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/bootstrap/js/bootstrap.js"></script>
-
-<!-- Superclick -->
-
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/superclick/superclick.js"></script>
-
-<!-- Chosen -->
-
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/chosen/chosen.js"></script>
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/chosen/chosen-demo.js"></script>
-
-
-
-<!-- Perfact scroll -->
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/perfect-scrollbar/js/perfect-scrollbar.min.js"></script>
-
-<!-- Content box -->
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/content-box/contentbox.js"></script>
-
-
-<!-- Morris charts demo -->
-<!--<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/charts/morris/morris-demo.js"></script>-->
-
-<!-- EQul height js-->
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/match-height/jquery.matchHeight.js"></script>
-<!-- Theme layout -->
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/themes/admin/layout.js"></script>
-
-<!-- PieGage -->
-
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/charts/piegage/piegage.js"></script>
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/charts/piegage/piegage-demo.js"></script>
-
-<!-- Morris charts -->
-
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/js-core/raphael.js"></script>
-<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/charts/morris/morris.js"></script>
-
-
 <script>
-                                                        $(document).ready(function () {
-
-
-                                                            $('.column_button_bar').on('click', '#s1_tender_adddel_btn', function (event) {
-                                                                event.preventDefault();
-                                                                $('#add_delete_column').show();
-                                                            });
-
-                                                            $('.column_button_bar').on('click', '#s1_tender_additem_btn', function (event) {
-                                                                event.preventDefault();
-                                                                $('#creat_seaction_form').show();
-                                                            });
-
-                                                            $('.create_list_sectoin').on('click', '.bq_tender_addsub_item', function (event) {
-                                                                event.preventDefault();
-                                                                $('#creat_subitem_form').show();
-                                                            });
-
-
-                                                        });
-</script>
-<script>
-    $(document).ready(function () {
-        $('#campaignList').DataTable();
-        $("#campaignList_wrapper").attr("style", "margin-top:50px");
-        $('.mega').on('scroll', function () {
-            $('.header').css('top', $(this).scrollTop());
-        });
-
-        var availableTags = ["ActionScript", "AppleScript", "Asp", "BASIC", "C", "C++", "Clojure", "COBOL", "ColdFusion", "Erlang", "Fortran", "Groovy", "Haskell", "Java", "JavaScript", "Lisp", "Perl", "PHP", "Python", "Ruby", "Scala", "Scheme"];
-        $("#tags").autocomplete({
-            source: availableTags
-        });
-        $("#tagres").autocomplete({
-            source: availableTags
-        });
-
-
-        $.validate({
-            lang: 'en'
-        });
-
-
-
-        $(".correction-ancher").click(function () {
-            $(this).parent().parent().next(".correction-textarea").show('fast');
-        });
-
-        $(".correction-ancher").click(function () {
-            $(this).parent().parent().hide('fast');
-        });
-
-
-
-    });
+   
  
     function goToDel(url){
         if(confirm("Are you sure?")){
@@ -237,18 +99,3 @@
     }
     
 </script>
-
-
-
-
-
-
-<style>
-
-</style>
-
-
-
-</body>
-
-</html>
