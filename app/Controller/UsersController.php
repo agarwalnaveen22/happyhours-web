@@ -287,12 +287,12 @@ class UsersController extends AppController {
                 $user['is_verified'] = 1;
             }*/
             if ($this->User->save($user)) {
-                $this->Flash->success(__('Email verified success.'));
+                echo 'Email verified success.';
             } else {
-                $this->Flash->error(__('Email can not verified.'));
+                echo 'Email can not verified.';
             }
         } else {
-            $this->Flash->error(__('Email can not verified.'));
+            echo 'Email can not verified.';
         }
     }
 

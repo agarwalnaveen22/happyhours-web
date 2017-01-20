@@ -153,11 +153,27 @@ class WebservicesController extends AppController {
             $this->request->data['role_id'] = 3;
             $this->request->data['status'] = 0;
             $this->request->data['is_verified'] = 0;
+            $this->request->data['social_id'] = '';
             $this->request->data['password'] = AuthComponent::password($this->request->data['password']);
             $this->User->set($this->request->data);
             if ($this->User->validates()) {
                 $settings = $this->viewVars['settings'];
                 $this->User->save();
+                $userId = $this->User->getInsertID();
+                $userDetail['user_id'] = $userId;
+                if (isset($this->request->data['name'])) {
+                    $name = explode(" ", $this->request->data['name']);
+                    $userDetail['first_name'] = @$name[0];
+                    $userDetail['last_name'] = @$name[1];
+                }
+                if (isset($this->request->data['image']) && $this->request->data['image'] != '') {
+                    $filename = uniqid() . ".jpg";
+                    if (file_put_contents("uploads/" . $filename, file_get_contents($this->request->data['image']))) {
+                        $userDetail['profile_picture'] = $filename;
+                    }
+                }
+                $this->User->UserDetail->create();
+                $this->User->UserDetail->save($userDetail);
                 $response['status'] = true;
                 $response['message'] = 'Registration success';
                 $userId = $this->User->getInsertID();
@@ -410,7 +426,7 @@ class WebservicesController extends AppController {
             $id = $this->request->data['id']; //2; //
             if ($lat != '' && $lng != '') {
                 $deal = $this->Deal->query("SELECT
-                    Deal.*,SupplierDetail.*,
+                    Deal.*,SupplierDetail.*,Location.*,
                     ( 6371 * acos( cos( radians({$lat}) ) * cos( radians( `lat` ) ) * cos( radians( `lng` ) - "
                         . "radians({$lng}) ) + sin( radians({$lat}) ) * sin( radians( `lat` ) ) ) ) AS distance
                 FROM deals as Deal, supplier_details as SupplierDetail, deal_locations as DealLocation, locations as Location WHERE Deal.id=$id 
@@ -489,7 +505,7 @@ class WebservicesController extends AppController {
                         $this->User->UserOrder->save($userTr);
                         $response['status'] = true;
                         $orderId = $this->User->UserOrder->getInsertID();
-                        $response['data'] = 1000000+$orderId;
+                        $response['data'] = 1000000 + $orderId;
                     }
                 } else {
                     $userTr['user_id'] = $userId;
@@ -538,8 +554,8 @@ class WebservicesController extends AppController {
         }
         echo json_encode($response);
     }
-    
-    public function getDealsTest(){
+
+    public function getDealsTest() {
         $lat = '3.1319229';
         $lng = '101.59472430000005';
         $radius = 5;
@@ -547,18 +563,77 @@ class WebservicesController extends AppController {
         echo "SELECT
                     Location.*,Deal.*,SupplierDetail.*,
                     ( 6371 * acos( cos( radians({$lat}) ) * cos( radians( `lat` ) ) * cos( radians( `lng` ) - "
-                        . "radians({$lng}) ) + sin( radians({$lat}) ) * sin( radians( `lat` ) ) ) ) AS distance
+        . "radians({$lng}) ) + sin( radians({$lat}) ) * sin( radians( `lat` ) ) ) ) AS distance
                 FROM `locations` as Location,deals as Deal, deal_locations as DealLocation, campaigns as Campaign,supplier_details as SupplierDetail
                 where Deal.start_date<='" . date("Y-m-d") . "' "
-                        . "and Deal.end_date>='" . date("Y-m-d") . "' "
-                        . "and ((Deal.is_all_day=1) or (Deal.start_time<='$time' and Deal.end_time>='$time')) "
-                        . "and Deal.supplier_detail_id=SupplierDetail.id "
-                        . "and Campaign.id=Deal.campaign_id "
-                        . "AND DealLocation.deal_id=Deal.id AND Location.id=DealLocation.location_id "
-                        . "and date(Campaign.start_datetime)<='" . date("Y-m-d") . "' and date(Campaign.end_datetime)>='" . date("Y-m-d") . "'
+        . "and Deal.end_date>='" . date("Y-m-d") . "' "
+        . "and ((Deal.is_all_day=1) or (Deal.start_time<='$time' and Deal.end_time>='$time')) "
+        . "and Deal.supplier_detail_id=SupplierDetail.id "
+        . "and Campaign.id=Deal.campaign_id "
+        . "AND DealLocation.deal_id=Deal.id AND Location.id=DealLocation.location_id "
+        . "and date(Campaign.start_datetime)<='" . date("Y-m-d") . "' and date(Campaign.end_datetime)>='" . date("Y-m-d") . "'
                         
                 HAVING distance <= {$radius}
-                ORDER BY distance ASC";die;
+                ORDER BY distance ASC";
+        die;
+    }
+
+    public function getAllSuppliers() {
+        if ($this->request->is('post')) {
+            $this->loadModel('SupplierDetail');
+            $suppliers = $this->SupplierDetail->find('all');
+            $response['status'] = true;
+            $response['data'] = $suppliers;           
+        } else {
+            $response['status'] = false;
+            $response['message'] = 'Request is not valid';
+        }
+        echo json_encode($response);
+    }
+    
+    public function forgetPassword() {
+        if ($this->request->is('post')) {
+            $this->loadModel('User');
+            $user = $this->User->findByEmail($this->request->data['email']);
+            
+            if(!empty($user)){
+                $vcode = uniqid();
+                
+                $this->request->data['password'] = AuthComponent::password($vcode);
+                
+                $this->User->validate = array();
+                $this->User->id = $user['User']['id'];
+                $this->User->save($this->request->data);
+                $this->loadModel('EmailTemplate');
+                $emailTemplate = $this->EmailTemplate->find('first', array('conditions' => array(
+                        'EmailTemplate.slug' => 'customer-forget-password'
+                )));
+                if (!empty($emailTemplate)) {
+                    $settings = $this->viewVars['settings'];
+                    App::uses('CakeEmail', 'Network/Email');
+                    $Email = new CakeEmail($settings['Setting']['email_config']);
+                    $Email->from(array($emailTemplate['EmailTemplate']['from_email'] => $emailTemplate['EmailTemplate']['from_name']));
+                    $Email->to($this->request->data['email']);
+                    $Email->subject($emailTemplate['EmailTemplate']['subject']);
+                    $emailTemplate['EmailTemplate']['description'] = str_replace("{USERNAME}", $this->request->data['email'], $emailTemplate['EmailTemplate']['description']);
+                    $emailTemplate['EmailTemplate']['description'] = str_replace("{TEMP_PASS}", $vcode, $emailTemplate['EmailTemplate']['description']);
+                    $emailTemplate['EmailTemplate']['description'] = str_replace("{SITENAME}", $settings['Setting']['application_name'], $emailTemplate['EmailTemplate']['description']);
+                    if ($Email->send($emailTemplate['EmailTemplate']['description'])) {
+                        $response['status'] = true;
+                        $response['message'] = 'A temporary password has been sent to your email id';
+                    }
+                }
+                 
+            }else{
+                $response['status'] = false;
+                $response['message'] = 'Email is not correct';
+            }
+                     
+        } else {
+            $response['status'] = false;
+            $response['message'] = 'Request is not valid';
+        }
+        echo json_encode($response);
     }
 
 }

@@ -165,42 +165,42 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDAwyhHiHzIiINDQVi3o_79P34dTjA5NG0&libraries=places&callback=initAutocomplete" async defer></script>
 <!-- Bootstrap Datepicker -->
 <script>
-                                                        function initAutocomplete() {
-                                                            // Create the autocomplete object, restricting the search to geographical
-                                                            // location types.
-                                                            autocomplete = new google.maps.places.Autocomplete(
-                                                                    /** @type {!HTMLInputElement} */(document.getElementById('landmark')),
-                                                                    {types: ['geocode']});
+                                                            function initAutocomplete() {
+                                                                // Create the autocomplete object, restricting the search to geographical
+                                                                // location types.
+                                                                autocomplete = new google.maps.places.Autocomplete(
+                                                                        /** @type {!HTMLInputElement} */(document.getElementById('landmark')),
+                                                                        {types: ['geocode']});
 
-                                                            autocomplete.addListener('place_changed', fillInAddress);
-                                                        }
-
-                                                        function fillInAddress() {
-                                                            // Get the place details from the autocomplete object.
-                                                            var place = autocomplete.getPlace();
-
-                                                            console.log(place);
-                                                            console.log(JSON.stringify(place));
-                                                            console.log("lat: " + place.geometry.location.lat() + " lng: " + place.geometry.location.lng())
-                                                            $("#lat").val(place.geometry.location.lat());
-                                                            $("#lng").val(place.geometry.location.lng());
-                                                        }
-
-                                                        function geolocate() {
-                                                            if (navigator.geolocation) {
-                                                                navigator.geolocation.getCurrentPosition(function (position) {
-                                                                    var geolocation = {
-                                                                        lat: position.coords.latitude,
-                                                                        lng: position.coords.longitude
-                                                                    };
-                                                                    var circle = new google.maps.Circle({
-                                                                        center: geolocation,
-                                                                        radius: position.coords.accuracy
-                                                                    });
-                                                                    autocomplete.setBounds(circle.getBounds());
-                                                                });
+                                                                autocomplete.addListener('place_changed', fillInAddress);
                                                             }
-                                                        }
+
+                                                            function fillInAddress() {
+                                                                // Get the place details from the autocomplete object.
+                                                                var place = autocomplete.getPlace();
+
+                                                                console.log(place);
+                                                                console.log(JSON.stringify(place));
+                                                                console.log("lat: " + place.geometry.location.lat() + " lng: " + place.geometry.location.lng())
+                                                                $("#lat").val(place.geometry.location.lat());
+                                                                $("#lng").val(place.geometry.location.lng());
+                                                            }
+
+                                                            function geolocate() {
+                                                                if (navigator.geolocation) {
+                                                                    navigator.geolocation.getCurrentPosition(function (position) {
+                                                                        var geolocation = {
+                                                                            lat: position.coords.latitude,
+                                                                            lng: position.coords.longitude
+                                                                        };
+                                                                        var circle = new google.maps.Circle({
+                                                                            center: geolocation,
+                                                                            radius: position.coords.accuracy
+                                                                        });
+                                                                        autocomplete.setBounds(circle.getBounds());
+                                                                    });
+                                                                }
+                                                            }
 </script>
 <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/datatable/datatable.js"></script>
 <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/datatable/datatable-bootstrap.js"></script>
