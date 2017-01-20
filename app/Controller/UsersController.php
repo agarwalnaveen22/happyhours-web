@@ -59,10 +59,13 @@ class UsersController extends AppController {
      */
     public function add() {
         if ($this->request->is('post')) {
+            //pr($this->request->data);die;
             //pr($_FILES['data']['tmp_name']['UserDetail']['profile_picture']);die;
             $this->User->create();
             $this->request->data['User']['is_verified'] = 1;
             $this->request->data['User']['status'] = 1;
+            $this->request->data['User']['social_id'] = '';
+            $this->request->data['User']['verification_code'] = '';
             $this->request->data['User']['password'] = AuthComponent::password($this->request->data['User']['password']);
             if ($this->User->save($this->request->data)) {
                 if (isset($this->request->data['UserDetail']['profile_picture']) && $this->request->data['UserDetail']['profile_picture']['name'] != '') {
@@ -85,13 +88,13 @@ class UsersController extends AppController {
                     $this->User->delete($userId);
                     $it = new RecursiveIteratorIterator(new RecursiveArrayIterator($this->User->UserDetail->validationErrors));
                     $list = iterator_to_array($it, false);
-                    $list = implode("<br>",$list);
+                    $list = implode("<br>", $list);
                     $this->Flash->error(__($list));
                 }
             } else {
                 $it = new RecursiveIteratorIterator(new RecursiveArrayIterator($this->User->validationErrors));
                 $list = iterator_to_array($it, false);
-                $list = implode("<br>",$list);
+                $list = implode("<br>", $list);
                 $this->Flash->error(__($list));
             }
         }
@@ -152,10 +155,10 @@ class UsersController extends AppController {
         $roles = $this->User->Role->find('list');
         $countries = $this->User->UserDetail->Country->find('list');
         $states = $this->User->UserDetail->Country->State->find('list', array('conditions' => array(
-                'State.country_id' => $this->request->data['UserDetail'][0]['country_id']
+                'State.country_id' => @$this->request->data['UserDetail'][0]['country_id']
         )));
         $cities = $this->User->UserDetail->Country->State->City->find('list', array('conditions' => array(
-                'City.state_id' => $this->request->data['UserDetail'][0]['state_id']
+                'City.state_id' => @$this->request->data['UserDetail'][0]['state_id']
         )));
         $this->set(compact('roles', 'countries', 'states', 'cities'));
     }
@@ -283,9 +286,9 @@ class UsersController extends AppController {
             $this->User->id = $check['User']['id'];
             $user['status'] = 1;
             $user['is_verified'] = 1;
-            /*if ($check['User']['role_id'] == 1) {
-                $user['is_verified'] = 1;
-            }*/
+            /* if ($check['User']['role_id'] == 1) {
+              $user['is_verified'] = 1;
+              } */
             if ($this->User->save($user)) {
                 echo 'Email verified success.';
             } else {
@@ -347,6 +350,8 @@ class UsersController extends AppController {
                 $this->request->data['User']['role_id'] = 2;
                 $this->request->data['User']['status'] = 0;
                 $this->request->data['User']['is_verified'] = 0;
+                $this->request->data['User']['social_id'] = '';
+                $this->request->data['User']['verification_code'] = '';
                 $this->User->create();
                 //pr($this->request->data['User']);die;
 
@@ -356,6 +361,9 @@ class UsersController extends AppController {
                     unset($this->request->data['SupplierDetail']['id']);
 
                     $this->SupplierDetail->create();
+                    $this->request->data['SupplierDetail']['mobile'] = isset($this->request->data['SupplierDetail']['mobile'])?$this->request->data['SupplierDetail']['mobile']:'';
+                    $this->request->data['SupplierDetail']['profile_picture'] = isset($this->request->data['SupplierDetail']['profile_picture'])?$this->request->data['SupplierDetail']['profile_picture']:'';
+                    $this->request->data['SupplierDetail']['document_description'] = isset($this->request->data['SupplierDetail']['document_description'])?$this->request->data['SupplierDetail']['document_description']:'';
                     if ($this->SupplierDetail->save($this->request->data)) {
                         $supplierId = $this->SupplierDetail->getInsertID();
                         $ponits['SupplierPoint']['supplier_detail_id'] = $supplierId;
@@ -363,6 +371,7 @@ class UsersController extends AppController {
                         $ponits['SupplierPoint']['point_type'] = 1;
                         $ponits['SupplierPoint']['remaining_points'] = $settings['Setting']['default_points'];
                         $ponits['SupplierPoint']['order_type_id'] = 1;
+                        $ponits['SupplierPoint']['deal_id'] = 0;
                         $this->SupplierDetail->SupplierPoint->save($ponits);
                         $response['status'] = true;
                         $response['data'] = $supplierId;
@@ -370,28 +379,29 @@ class UsersController extends AppController {
                     } else {
                         //pr($this->SupplierDetail->validationErrors);
                         $response['status'] = false;
-                        $response['message'] = "Can not save details, please try again";
+                        //pr($this->SupplierDetail->validationErrors);die;
+                        $response['message'] = "Can not save details, please try again later";
                     }
                     $this->loadModel('EmailTemplate');
 
                     $emailTemplate = $this->EmailTemplate->find('first', array('conditions' => array(
                             'EmailTemplate.slug' => 'customer-email-verification'
                     )));
-                    /*if (!empty($emailTemplate)) {
-                        App::uses('CakeEmail', 'Network/Email');
-                        $Email = new CakeEmail($settings['Setting']['email_config']);
-                        $Email->from(array($emailTemplate['EmailTemplate']['from_email'] => $emailTemplate['EmailTemplate']['from_name']));
-                        $Email->to($this->request->data['SupplierDetail']['company_email']);
-                        $Email->subject($emailTemplate['EmailTemplate']['subject']);
-                        $code = uniqid();
-                        $vcode = Configure::read('App.baseUrl') . "/users/verifySupplier/" . str_replace("==", "", base64_encode($this->request->data['SupplierDetail']['company_email'])) . "/" . $code;
-                        $emailTemplate['EmailTemplate']['description'] = str_replace("{USERNAME}", $this->request->data['SupplierDetail']['company_email'], $emailTemplate['EmailTemplate']['description']);
-                        $emailTemplate['EmailTemplate']['description'] = str_replace("{LINK}", $vcode, $emailTemplate['EmailTemplate']['description']);
-                        $emailTemplate['EmailTemplate']['description'] = str_replace("{SITENAME}", $settings['Setting']['application_name'], $emailTemplate['EmailTemplate']['description']);
-                        if ($Email->send($emailTemplate['EmailTemplate']['description'])) {
-                            $response['message'] = 'A verification email has been sent to you, please check your email account, please continue to registration';
-                        }
-                    }*/
+                    /* if (!empty($emailTemplate)) {
+                      App::uses('CakeEmail', 'Network/Email');
+                      $Email = new CakeEmail($settings['Setting']['email_config']);
+                      $Email->from(array($emailTemplate['EmailTemplate']['from_email'] => $emailTemplate['EmailTemplate']['from_name']));
+                      $Email->to($this->request->data['SupplierDetail']['company_email']);
+                      $Email->subject($emailTemplate['EmailTemplate']['subject']);
+                      $code = uniqid();
+                      $vcode = Configure::read('App.baseUrl') . "/users/verifySupplier/" . str_replace("==", "", base64_encode($this->request->data['SupplierDetail']['company_email'])) . "/" . $code;
+                      $emailTemplate['EmailTemplate']['description'] = str_replace("{USERNAME}", $this->request->data['SupplierDetail']['company_email'], $emailTemplate['EmailTemplate']['description']);
+                      $emailTemplate['EmailTemplate']['description'] = str_replace("{LINK}", $vcode, $emailTemplate['EmailTemplate']['description']);
+                      $emailTemplate['EmailTemplate']['description'] = str_replace("{SITENAME}", $settings['Setting']['application_name'], $emailTemplate['EmailTemplate']['description']);
+                      if ($Email->send($emailTemplate['EmailTemplate']['description'])) {
+                      $response['message'] = 'A verification email has been sent to you, please check your email account, please continue to registration';
+                      }
+                      } */
                 } else {
                     $response['status'] = false;
                     $response['message'] = "Can not create your account";
@@ -639,8 +649,12 @@ class UsersController extends AppController {
     public function campaignList() {
         $this->loadModel('Campaign');
         if ($this->request->is('post')) {
-            $this->request->data['Campaign']['start_datetime'] = date("Y-m-d H:i:s", strtotime($this->request->data['Campaign']['start_datetime']));
-            $this->request->data['Campaign']['end_datetime'] = date("Y-m-d H:i:s", strtotime($this->request->data['Campaign']['end_datetime']));
+            $this->request->data['Campaign']['start_date'] = date("Y-m-d", strtotime($this->request->data['Campaign']['start_date']));
+            $this->request->data['Campaign']['end_date'] = date("Y-m-d", strtotime($this->request->data['Campaign']['end_date']));
+            $this->request->data['Campaign']['start_time'] = date("H:i:s", strtotime($this->request->data['Campaign']['start_time']));
+            $this->request->data['Campaign']['end_time'] = date("H:i:s", strtotime($this->request->data['Campaign']['end_time']));
+            $this->request->data['Campaign']['start_datetime'] = $this->request->data['Campaign']['start_date']." ".$this->request->data['Campaign']['start_time'];
+            $this->request->data['Campaign']['end_datetime'] = $this->request->data['Campaign']['end_date']." ".$this->request->data['Campaign']['end_time'];
             if ($this->request->data['Campaign']['id'] != '') {
                 $this->Campaign->id = $this->request->data['Campaign']['id'];
             }
@@ -676,8 +690,8 @@ class UsersController extends AppController {
         $this->loadModel('Campaign');
         $data = $this->Campaign->findById($id);
         if (!empty($data)) {
-            $data['start_datetime'] = date("d/m/Y H:i:s");
-            $data['end_datetime'] = date("d/m/Y H:i:s");
+            $data['start_datetime'] = date("m/d/Y H:ia", strtotime($data['Campaign']['start_datetime']));
+            $data['end_datetime'] = date("m/d/Y H:ia", strtotime($data['Campaign']['end_datetime']));
             $response['status'] = true;
             $response['data'] = $data;
         } else {
@@ -708,6 +722,10 @@ class UsersController extends AppController {
             $this->request->data['Deal']['supplier_detail_id'] = $campaign['Campaign']['supplier_detail_id'];
             $this->request->data['Deal']['start_date'] = date("Y-m-d", strtotime($this->request->data['Deal']['start_date']));
             $this->request->data['Deal']['end_date'] = date("Y-m-d", strtotime($this->request->data['Deal']['end_date']));
+            $this->request->data['Deal']['start_time'] = date("H:i:s", strtotime($this->request->data['Deal']['start_time']));
+            $this->request->data['Deal']['end_time'] = date("H:i:s", strtotime($this->request->data['Deal']['end_time']));
+            $this->request->data['Deal']['is_all_day'] = isset($this->request->data['Deal']['is_all_day'])?$this->request->data['Deal']['is_all_day']:0;
+            
             if ($this->request->data['Deal']['id'] != '') {
                 $this->Campaign->Deal->id = $this->request->data['Deal']['id'];
             }
@@ -733,9 +751,6 @@ class UsersController extends AppController {
                     $dealId = $this->Campaign->Deal->getInsertID();
                 }
                 ######### Supplier Points Redemption #############
-                
-               
-               
                 //if ($this->request->data['Deal']['id'] == '') {
                 if (isset($this->request->data['Deal']['locations']) && $this->request->data['Deal']['locations'] != '') {
                     if ($this->request->data['Deal']['id'] != '') {
@@ -763,6 +778,8 @@ class UsersController extends AppController {
                     foreach ($this->request->data['Town'] as $loc) {
                         $this->Campaign->Deal->DealTargetLocation->create();
                         $location['deal_id'] = $dealId;
+                        $location['state_id'] = 0;
+                        $location['city_id'] = 0;
                         $location['township_id'] = $loc;
                         $this->Campaign->Deal->DealTargetLocation->save($location);
                     }
@@ -790,6 +807,7 @@ class UsersController extends AppController {
                             if (empty($already)) {
                                 $this->Campaign->Deal->DealTargetLocation->create();
                                 $location['deal_id'] = $dealId;
+                                $location['state_id'] = 0;
                                 $location['city_id'] = $loc;
                                 $location['township_id'] = 0;
                                 $this->Campaign->Deal->DealTargetLocation->save($location);
@@ -797,6 +815,7 @@ class UsersController extends AppController {
                         } else {
                             $this->Campaign->Deal->DealTargetLocation->create();
                             $location['deal_id'] = $dealId;
+                            $location['state_id'] = 0;
                             $location['city_id'] = $loc;
                             $location['township_id'] = 0;
                             $this->Campaign->Deal->DealTargetLocation->save($location);
@@ -968,7 +987,7 @@ class UsersController extends AppController {
             if ($this->request->data['Location']['id'] != '') {
                 $this->SupplierDetail->Location->id = $this->request->data['Location']['id'];
             }
-            if($this->Session->read("Auth.User")['Role']['id']>1){
+            if ($this->Session->read("Auth.User")['Role']['id'] > 1) {
                 $this->request->data['Location']['supplier_detail_id'] = $this->Session->read("Auth.User")['SupplierDetail'][0]['id'];
             }
             if ($this->SupplierDetail->Location->save($this->request->data)) {

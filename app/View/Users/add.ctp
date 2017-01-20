@@ -1,303 +1,118 @@
-<div id="page-content-wrapper">
-    <div id="page-content">
-        <div class="container">
-            <!-- pageging  block -->
-            <?php
-            $isPermit = $this->App->getPermission($this->Session->read("Auth.User")['User']['role_id'], 'users', 'add');
-            if ($isPermit) {
-                ?>
-                <ol class="breadcrumb">
-                    <li><a href="<?php echo Configure::read('App.baseUrl'); ?>/users/dashboard">Dashboard</a></li>
-                    <li class="active">Add User</li>
-                </ol>
-                <section class="create_list_sectoin">
-                    <form id="supplier-deal" method="post" enctype="multipart/form-data">
-                        <div class="Section-title title_border gray-bg mar-b20">
-                            <h2 class="trans-cap supplier">Add User</h2>
-                        </div>
-                        <div class="tab-pane active">
-                            <div class="tab-content">
-                                <!-- <div class="heading-tab-pr">PR Detail</div>-->
+<div class="page animsition">
 
-                                <div class="tab-pane active marg-bottom-15" id="step-1">
-                                    <div class="upload_download_wrapper clearfix mar-t20 event_info">
-                                        <h4>User Details</h4>
-                                        <div class="form-tander1 pad_all_15">
-                                            <div class="form-tander1 pad_all_15">
-                                                <div class="col-sm-4 col-md-3 col-xs-6">
-                                                    <label>Role</label>
-                                                </div>
-                                                <div class="col-sm-5 col-md-5 col-xs-6 col-xs-6">
-                                                    <select class="custom-select" required name="data[User][role_id]">
-                                                        <option value="">Select Role</option>
-                                                        <?php foreach ($roles as $k=>$c) { ?>
-                                                            <option value="<?php echo $k; ?>"><?php echo $c; ?></option>
-                                                        <?php } ?>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
+    <div class="page-content container-fluid">
+        <div class="row">
 
-                                        <div class="form-tander1 pad_all_15">
-                                            <div class="row">
-                                                <div class="col-sm-4 col-md-3 col-xs-6">
-                                                    <label>Email</label>
-                                                </div>
-                                                <div class="col-sm-5 col-md-5 col-xs-6 col-xs-6">
-                                                    <input required name="data[User][email]" type="email" class="form-control" />
-                                                </div>
-                                            </div>
-                                        </div>
+            <div class="col-md-12">
+                <!-- Panel Wizard Form Container -->
+                <div class="panel" id="exampleWizardFormContainer">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Users</h3>
+                    </div>
+                    <div class="panel-body">
+                        <?php
+                        $isPermit = $this->App->getPermission($this->Session->read("Auth.User")['User']['role_id'], 'users', 'add');
+                        if ($isPermit) {
+                            ?>
+                            <h3 class="panel-title">Add User</h3>
+                            <!-- Wizard Content -->
+                            <form class="wizard-content" id="supplier-deal" method="post" enctype="multipart/form-data">
 
-                                        <div class="form-tander1 pad_all_15">
-                                            <div class="row">
-                                                <div class="col-sm-4 col-md-3 col-xs-6">
-                                                    <label>Password</label>
-                                                </div>
-                                                <div class="col-sm-5 col-md-5 col-xs-6 col-xs-6">
-                                                    <input type="password" required name="data[User][password]" class="form-control" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-tander1 pad_all_15">
-                                            <div class="row">
-                                                <div class="col-sm-4 col-md-3 col-xs-6">
-                                                    <label>First Name</label>
-                                                </div>
-                                                <div class="col-sm-5 col-md-5 col-xs-6 col-xs-6">
-                                                    <input type="text" required name="data[UserDetail][first_name]" class="form-control" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-tander1 pad_all_15">
-                                            <div class="row">
-                                                <div class="col-sm-4 col-md-3 col-xs-6">
-                                                    <label>Last Name</label>
-                                                </div>
-                                                <div class="col-sm-5 col-md-5 col-xs-6 col-xs-6">
-                                                    <input type="text" required name="data[UserDetail][last_name]" class="form-control" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-tander1 pad_all_15">
-                                            <div class="row">
-                                                <div class="col-sm-4 col-md-3 col-xs-6">
-                                                    <label>Phone</label>
-                                                </div>
-                                                <div class="col-sm-5 col-md-5 col-xs-6 col-xs-6">
-                                                    <input type="number" required name="data[UserDetail][phone]" class="form-control" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-tander1 pad_all_15">
-                                            <div class="row">
-                                                <div class="col-sm-4 col-md-3 col-xs-6">
-                                                    <label>Country</label>
-                                                </div>
-                                                <div class="col-sm-5 col-md-5 col-xs-6 col-xs-6">
-                                                    <select class="custom-select" onchange="getStates(this.value)" required name="data[UserDetail][country_id]">
-                                                        <option value="">Select Country</option>
-                                                        <?php foreach ($countries as $k => $c) { ?>
-                                                            <option value="<?php echo $k; ?>"><?php echo $c; ?></option>
-                                                        <?php } ?>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-tander1 pad_all_15">
-                                            <div class="row">
-                                                <div class="col-sm-4 col-md-3 col-xs-6">
-                                                    <label>State</label>
-                                                </div>
-                                                <div class="col-sm-5 col-md-5 col-xs-6 col-xs-6">
-                                                    <select class="custom-select state_id" onchange="getCities(this.value)" required name="data[UserDetail][state_id]">
-                                                        <option value="">Select State</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-tander1 pad_all_15">
-                                            <div class="row">
-                                                <div class="col-sm-4 col-md-3 col-xs-6">
-                                                    <label>City</label>
-                                                </div>
-                                                <div class="col-sm-5 col-md-5 col-xs-6 col-xs-6">
-                                                    <select class="custom-select city_id" required name="data[UserDetail][city_id]">
-                                                        <option value="">Select City</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-tander1 pad_all_15">
-                                            <div class="row">
-                                                <div class="col-sm-4 col-md-3 col-xs-6">
-                                                    <label>Address</label>
-                                                </div>
-                                                <div class="col-sm-5 col-md-5 col-xs-6 col-xs-6">
-                                                    <textarea required name="data[UserDetail][address]" class="form-control"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-tander1 pad_all_15">
-                                            <div class="row">
-                                                <div class="col-sm-4 col-md-3 col-xs-6">
-                                                    <label>Postal Code</label>
-                                                </div>
-                                                <div class="col-sm-5 col-md-5 col-xs-6 col-xs-6">
-                                                    <input type="number" required name="data[UserDetail][postal_code]" class="form-control" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-tander1 pad_all_15">
-                                            <div class="row">
-                                                <div class="col-sm-4 col-md-3 col-xs-6">
-                                                    <label>User Image</label>
-                                                </div>
-                                                <div class="col-sm-5 col-md-5 col-xs-6 col-xs-6">
-
-                                                    <div data-provides="fileinput" class="fileinput fileinput-new input-group">
-                                                        <div data-trigger="fileinput" class="form-control"> <i class="glyphicon glyphicon-file fileinput-exists"></i> <span class="fileinput-filename show_name"></span> </div>
-                                                        <span class="input-group-addon btn btn-black btn-file"> <span class="fileinput-new">Select file</span> <span class="fileinput-exists">Change</span>
-                                                            <input type="file" id="image" name="data[UserDetail][profile_picture]">
-                                                        </span> </div>
-                                                    
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                                         
+                                <div class="form-group">
+                                    <label class="control-label" for="inputPasswordOne">Role :</label>
+                                    <select class="form-control" required name="data[User][role_id]">
+                                        <option value="">Select Role</option>
+                                        <?php foreach ($roles as $k => $c) { ?>
+                                            <option value="<?php echo $k; ?>"><?php echo $c; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="inputPasswordOne">Email :</label>
+                                    <input required name="data[User][email]" type="email" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="inputPasswordOne">Password :</label>
+                                    <input type="password" required name="data[User][password]" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="inputPasswordOne">First Name :</label>
+                                    <input type="text" required name="data[UserDetail][first_name]" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="inputPasswordOne">Last Name :</label>
+                                    <input type="text" required name="data[UserDetail][last_name]" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="inputPasswordOne">Phone :</label>
+                                    <input type="number" required name="data[UserDetail][phone]" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="inputPasswordOne">Country :</label>
+                                    <select class="form-control" onchange="getStates(this.value)" required name="data[UserDetail][country_id]">
+                                        <option value="">Select Country</option>
+                                        <?php foreach ($countries as $k => $c) { ?>
+                                            <option value="<?php echo $k; ?>"><?php echo $c; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="inputPasswordOne">State :</label>
+                                    <select class="form-control state_id" onchange="getCities(this.value)" required name="data[UserDetail][state_id]">
+                                        <option value="">Select State</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="inputPasswordOne">City :</label>
+                                    <select class="form-control city_id" required name="data[UserDetail][city_id]">
+                                        <option value="">Select City</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="inputPasswordOne">Address :</label>
+                                    <textarea required name="data[UserDetail][address]" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="inputPasswordOne">Postal Code :</label>
+                                    <input type="number" required name="data[UserDetail][postal_code]" class="form-control" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="inputPasswordOne">User Image :</label>
+                                    <div class="input-group input-group-file">
+                                        <input type="text" class="form-control" readonly="">
+                                        <span class="input-group-btn">
+                                            <span class="btn btn-success btn-file">
+                                                <i class="icon wb-upload" aria-hidden="true"></i>
+                                                <input type="file" id="image" required name="data[UserDetail][profile_picture]">
+                                            </span>
+                                        </span>
                                     </div>
                                 </div>
-
-
-
-
-                                <div class="btn-next">
-                                    <button class="btn btn-info ph_btn marg-top-20 hvr-pop hvr-rectangle-out">Save</button>
+                                
+                                <div class="text-right">
+                                    <button type="submit" class="btn btn-primary" id="validateButton2">Save</button>
                                 </div>
 
-
-                            </div>
-
+                            </form>
 
 
+                        <?php } ?>
+
+                    </div>
 
 
-                        </div>
+                    <!-- Wizard Content -->
 
-
-
-
-                        </div>
-
-                    </form>
-                </section>
-            <?php } ?>
+                </div>
+                <!-- End Panel Wizard Form Container -->
             </div>
         </div>
+
+
     </div>
-
-
-
-
-
-
-
-
-
-    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/datepicker/chosen.jquery.js"></script>
-    <!-- Bootstrap Datepicker -->
-    <link href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/datepicker/datepicker.css" />
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/datepicker/datepicker.js"></script>
-    <link href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/datepicker/bootstrap-datetimepicker.min.css" />
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/datepicker/bootstrap-datetimepicker.min.js"></script>
-    <link href="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/datepicker/multi-select.css" />
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/datepicker/jquery.multi-select.js"></script>
-    
-
-    <!-- Google CDN jQuery with fallback to local -->
-
-    <!-- Bootstrap Tooltip -->
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/tooltip/tooltip.js"></script>
-
-
-    <!-- WIDGETS -->
-    <!-- Uniform -->
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/uniform/uniform.js"></script>
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/uniform/uniform-demo.js"></script>
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/bootstrap/js/bootstrap.js"></script>
-
-    <!-- Superclick -->
-
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/superclick/superclick.js"></script>
-
-    <!-- Chosen -->
-
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/chosen/chosen.js"></script>
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/chosen/chosen-demo.js"></script>
-
-
-
-    <!-- Perfact scroll -->
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/perfect-scrollbar/js/perfect-scrollbar.min.js"></script>
-
-    <!-- Content box -->
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/content-box/contentbox.js"></script>
-
-
-    <!-- Morris charts demo -->
-    <!--<script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/charts/morris/morris-demo.js"></script>-->
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/datepicker/datepicker.js"></script>
-
-    <!-- EQul height js-->
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/match-height/jquery.matchHeight.js"></script>
-    <!-- Theme layout -->
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/themes/admin/layout.js"></script>
-
-    <!-- PieGage -->
-
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/charts/piegage/piegage.js"></script>
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/charts/piegage/piegage-demo.js"></script>
-
-    <!-- Morris charts -->
-
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/js-core/raphael.js"></script>
-    <script type="text/javascript" src="<?php echo Configure::read('App.baseUrl'); ?>/css/assets/widgets/charts/morris/morris.js"></script>
-
+</div>
 
 <script>
-                                                                                $(document).ready(function () {
-
-
-                                                                                    $('.column_button_bar').on('click', '#s1_tender_adddel_btn', function (event) {
-                                                                                        event.preventDefault();
-                                                                                        $('#add_delete_column').show();
-                                                                                    });
-
-                                                                                    $('.column_button_bar').on('click', '#s1_tender_additem_btn', function (event) {
-                                                                                        event.preventDefault();
-                                                                                        $('#creat_seaction_form').show();
-                                                                                    });
-
-                                                                                    $('.create_list_sectoin').on('click', '.bq_tender_addsub_item', function (event) {
-                                                                                        event.preventDefault();
-                                                                                        $('#creat_subitem_form').show();
-                                                                                    });
-
-                                                                                    $(document).on("change", "#image", function () {
-                                                                                        $(".show_name").html($(this).val());
-                                                                                        $(".up_btn").removeClass('btn-gray').addClass('btn-blue');
-                                                                                    });
-
-                                                                                });
-</script>
-<script>
-    
-    
-    
     function getStates(id) {
         var request = $.ajax({
             url: apiUrl + "/Cities/getStates",
@@ -323,8 +138,8 @@
 
         });
     }
-    
-    
+
+
     function getCities(id) {
         var request = $.ajax({
             url: apiUrl + "/Townships/getCities",
@@ -350,15 +165,5 @@
 
         });
     }
-    
+
 </script>
-
-
-
-
-
-
-
-</body>
-
-</html>

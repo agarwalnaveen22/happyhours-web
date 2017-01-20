@@ -1,14 +1,72 @@
-<div id="page-content-wrapper">
-    <div id="page-content">
-        <div class="container">
-            <ol class="breadcrumb">
-                <li><a href="Index.html">Dashboard</a> </li>
-                <li class="active">Supplier Registration Information</li>
-            </ol>
+<div class="page animsition">
+    <div class="page-content container-fluid">
+        <div class="row">
+            <!-- pageging  block -->
+
+            <div class="col-md-12">
+
+                <div class="panel" id="exampleWizardFormContainer">
+
+                    <div class="panel-heading">
+                        <h3 class="panel-title">  Supplier Registration Information</h3>
+                        
+                        
+                         <div class="lower-bar-search-contant a_search">
+                    <div class="lower-bar-search-contant-heading gray-up-bg">
+                        <div class="row">
+                            <div class="col-md-4 col-sm-4 col-lg-4">
+                                <div class="short-by">
+                                    <input type="text" placeholder="Search..." class="form-control">
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4 col-sm-4 col-lg-4">
+                                <div class="short-by">
+                                    <label>Sort By</label>
+                                    <div class="select-main">
+                                        <select class="custom-select">
+                                            <option>Newest</option>
+                                            <option>Older</option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-lg-4">
+                                <div class="short-by">
+                                    <label>Account Status</label>
+                                    <div class="select-main">
+                                        <select class="custom-select" name="">
+                                            <option>Approved</option>
+                                            <option>Pending</option>
+                                            <option>Rejected</option>
+
+                                        </select>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                        
+                        
+                        
+                        
+                    </div>
+
+
+
+
+
+
+
+
+                    <div class="panel-body">
             <!-- page title block -->
-            <div class="page_title_wrapper marg-bottom-20">
-                <h3 class="sub_title"><i class="glyph-icon icon-list-alt" aria-hidden="true"></i>&nbsp; Supplier Registration Information</h3>
-            </div>
+         
             <div class="Invited-Supplier-List import-supplier white-bg supplier_reg">
                 <div class="import-supplier-inner-first pad_all_15" style="display: none;">
                     <div class="row marg-bottom-10">
@@ -99,46 +157,7 @@
 
                 </div>
 
-                <div class="lower-bar-search-contant a_search">
-                    <div class="lower-bar-search-contant-heading gray-up-bg">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="short-by">
-                                    <input type="text" placeholder="Search..." class="form-control">
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-3 col-md-offset-3">
-                                <div class="short-by">
-                                    <label>Sort By</label>
-                                    <div>
-                                        <select class="custom-select">
-                                            <option>Newest</option>
-                                            <option>Older</option>
-                                        </select>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="short-by">
-                                    <label>Account Status</label>
-                                    <div>
-                                        <select class="custom-select" name="">
-                                            <option>Approved</option>
-                                            <option>Pending</option>
-                                            <option>Rejected</option>
-
-                                        </select>
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
+               
                 <div class="lower-bar-search-contant-main white-bg pad_all_20 scroll_box_inner_search-box-main pad-t35">
                     <div>
                         <div class="row">
@@ -167,8 +186,8 @@
                                             <span><?php echo $this->App->getCompanyCategoryName($supplier['SupplierDetail']['company_category_id']); ?></span>
                                         </div>
                                         <div class="lower-bar-search-contant-main-contant  pad_all_10 buttons">
-                                            <button class="btn btn-info btn-block approve <?php echo ($supplier['User']['is_verified']==1)?'disabled':''; ?> " id="approve<?php echo $supplier['SupplierDetail']['id']; ?>" onclick="approveSupplier('<?php echo $supplier['User']['id']; ?>', '<?php echo $supplier['SupplierDetail']['id']; ?>', 1)"><?php echo ($supplier['User']['is_verified']==1)?'Approved':'Approve'; ?></button>
-                                            <button class="btn btn-black <?php echo ($supplier['User']['is_verified']==0)?'disabled':''; ?>  hvr-pop hvr-rectangle-out1" id="reject<?php echo $supplier['SupplierDetail']['id']; ?>" onclick="approveSupplier('<?php echo $supplier['User']['id']; ?>', '<?php echo $supplier['SupplierDetail']['id']; ?>', 0)"><?php echo ($supplier['User']['is_verified']==0)?'Rejected':'Reject'; ?></button>
+                                            <button class="btn btn-info approve <?php echo ($supplier['User']['is_verified']==1)?'disabled':''; ?> " id="approve<?php echo $supplier['SupplierDetail']['id']; ?>" onclick="approveSupplier('<?php echo $supplier['User']['id']; ?>', '<?php echo $supplier['SupplierDetail']['id']; ?>', 1)"><?php echo ($supplier['User']['is_verified']==1)?'Approved':'Approve'; ?></button>
+                                            <button class="btn Reject btn-black <?php echo ($supplier['User']['is_verified']==0)?'disabled':''; ?>  hvr-pop hvr-rectangle-out1" id="reject<?php echo $supplier['SupplierDetail']['id']; ?>" onclick="approveSupplier('<?php echo $supplier['User']['id']; ?>', '<?php echo $supplier['SupplierDetail']['id']; ?>', 0)"><?php echo ($supplier['User']['is_verified']==0)?'Rejected':'Reject'; ?></button>
                                         </div>
                                         <div class="dwonloadico">
                                             <a class=" btn-tooltip" title="" data-placement="top" data-toggle="tooltip" href="#" data-original-title="Download Profile">
@@ -218,7 +237,7 @@
     </div>
 </div>
 
-
+        </div></div></div>
 <!-- WIDGETS -->
 <!-- Uniform -->
 
@@ -347,6 +366,3 @@
         }
     }
 </script>
-</body>
-
-</html>
