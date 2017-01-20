@@ -7226,4 +7226,12 @@ top: 3px;
 
 .width-100-per{ width: 100%;}
 
+.form-group {
+  float: left!important;
+  margin: 1% !important;
+  width: 48% !important; 
+}
+
+.panel-title{ float: left; width: 100%;padding-left: 0; padding-right: 0;}
+
 /* -- mayank New --*/
